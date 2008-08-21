@@ -1,0 +1,43 @@
+
+                            J U N I T P E R F 
+ 
+
+  What is it? 
+  -----------
+  
+  JUnitPerf is a collection of JUnit test extensions for performance and
+  scalability testing.
+
+
+  The Latest Version
+  ------------------
+
+  The latest version of JUnitPerf is available at 
+  http://www.clarkware.com/software/junitperf.zip.
+
+
+  Documentation
+  -------------
+
+  Documentation is available in HTML format, in the docs/ directory.
+  For the installation and user manual, see docs/JUnitPerf.html.
+  For the API documentation, see docs/api/index.html.
+
+
+  Support
+  ---------
+
+  If you have any questions, comments, enhancement requests, success
+  stories, or bug reports regarding JUnitPerf, or if you want to be 
+  notified when new versions of JUnitPerf are available, please email 
+  mike@clarkware.com.
+
+
+  Licensing
+  ---------
+
+  This software is licensed under the terms you may find in the file 
+  named "LICENSE" in this directory.
+  
+
+  Thanks for using JUnitPerf!

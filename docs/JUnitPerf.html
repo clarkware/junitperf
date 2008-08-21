@@ -1,0 +1,1060 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>JUnitPerf</title>
+  <meta name="keywords" content="JUnitPerf, JUnit, Java performance,
+  Java scalability"/>
+  <meta name="description" content="A collection of JUnit test
+  decorators used to measure performance and scalability"/>
+
+  <style type="text/css">
+<!--
+    body {
+      font-family: Lucida, Verdana, Arial, Geneva, Helvetica, sans-serif;
+      margin-left: 2em;
+      margin-right: 2em;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+
+    a {
+      color: #000090;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    div#title { 
+      color: white;
+      background: #000090;
+      font-size: 150%;
+      font-weight: bold;
+      text-align: center;
+      padding-top: 0.125em;
+      padding-bottom: 0.125em;
+    }
+
+    div#summary {
+      margin-left: 4em;
+      margin-right: 4em;
+    }
+
+    div.header {
+      color: #000090;
+      background: #EDEDED;
+      font-weight: bold;
+      border-top: 1px solid #000090;
+      border-left: 1px solid #000090;
+      padding-top: .25em;
+      padding-bottom: .25em;
+      padding-left: 0.5em;
+      margin-top: 1.5em;
+      margin-bottom: 0;
+    }
+
+    div.code-header {
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      background: #000090;
+      padding-top: .25em;
+      padding-bottom: .25em;
+      margin-left: 5em;
+      margin-right: 5em;
+      margin-left: 5em;
+      margin-right: 5em;
+    }
+
+    div.code {
+      background: #EDEDED;
+      border-top: 1px solid #000090;
+      border-bottom: 1px solid #000090;
+      border-right: 1px solid #000090;
+      border-left: 1px solid #000090;
+      padding-left: 2em;
+      margin-top: 0;
+      margin-bottom: 2em;
+      margin-left: 5em;
+      margin-right: 5em;
+    }
+
+    div#copyright {
+      color: #AAAAAA;
+      font-size: 0.8em;
+      text-align: center;
+      margin-top: 3em;
+    } 
+-->
+  </style>
+
+</head>
+
+<body>
+
+
+<!--
+
+    Title
+
+-->
+
+<div id="title">
+JUnitPerf
+</div>
+
+<!--
+
+    Summary
+
+-->
+
+<div id="summary">
+<p>
+  <b><u>Summary</u></b>
+</p>
+<p>
+JUnitPerf is a collection of JUnit test decorators used to measure the
+performance and scalability of functionality contained within existing
+JUnit tests.
+</p>
+<p>
+<i>If you like this kind of automation, you'll love my book, 
+  <a href="http://www.pragmaticprogrammer.com/sk/auto/">Pragmatic Project
+  Automation</a>.
+</i>
+</p>
+<p>
+<i>
+The two-day, on-site 
+<a href="http://clarkware.com/courses/TDDWithJUnit.html">Test-Driven
+Development
+  with JUnit Workshop</a> is an excellent way to learn
+JUnit and test-driven development through lecture and a series of
+hands-on exercises guided by Mike Clark.
+</i>
+</p>
+</div>
+
+<!--
+    
+    Table of Contents
+    
+-->
+<div class="header">
+Table of Contents
+</div>
+
+<ul>
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#uses">Why Use JUnitPerf?</a></li>
+  <li><a href="#download">Downloading JUnitPerf</a></li>
+  <li><a href="#installation">Installing JUnitPerf</a></li>
+  <li><a href="#building">Building And Testing JUnitPerf</a></li> 
+  <li><a href="#howtouse">Using JUnitPerf</a></li>
+  <li><a href="#effectivetests">Writing Effective JUnitPerf Tests</a></li>
+  <li><a href="#limitations">Limitations</a></li>
+  <li><a href="#support">Support</a></li>
+  <li><a href="#donate">Donate</a></li>
+  <li><a href="#training">Training and Mentoring</a></li>
+  <li><a href="#license">License</a></li>
+  <li><a href="#credits">Acknowledgments</a></li>
+  <li><a href="#resources">Resources</a></li>
+</ul>
+
+<!--
+
+    Overview	
+
+-->
+<div class="header">
+<a name="overview"></a> 
+Overview
+</div>
+<p>
+JUnitPerf is a collection of JUnit test decorators used to measure the
+performance and scalability of functionality contained within existing
+JUnit tests.
+</p>
+<p>
+JUnitPerf contains the following JUnit test decorators:
+</p>
+<ul>
+  <li>
+    <p>
+      <b>TimedTest</b>
+    </p>
+    <p>
+      A <code>TimedTest</code> is a test decorator that runs a test 
+      and measures the elapsed time of the test.  
+    </p>
+    <p>
+      A <code>TimedTest</code> is constructed with a specified
+      maximum elapsed time.  By default, a <code>TimedTest</code> 
+      will wait for the completion of its decorated test and then 
+      fail if the maximum elapsed time was exceeded.  Alternatively, 
+      a <code>TimedTest</code> can be constructed to immediately 
+      signal a failure when the maximum elapsed time of its decorated 
+      test is exceeded.    
+    </p>
+  </li>
+  <li>
+    <p>
+      <b>LoadTest</b>
+    </p>
+    <p>
+      A <code>LoadTest</code> is a test decorator that runs a test 
+      with a simulated number of concurrent users and iterations.  
+    </p>
+    </li>
+</ul>
+
+<!--
+
+    Uses
+
+-->
+<div class="header">
+<a name="uses"></a> 
+Why Use JUnitPerf?
+</div>
+<p>
+JUnitPerf tests transparently decorate existing JUnit tests.  This
+decoration-based design allows performance testing to be dynamically
+added to an existing JUnit test without affecting the use of the JUnit
+test independent of its performance.  By decorating existing JUnit
+tests, it's quick and easy to compose a set of performance tests into
+a performance test suite.
+</p>
+<p>
+The performance test suite can then be run automatically and
+independent of your other JUnit tests.  In fact, you generally want to
+avoid grouping your JUnitPerf tests with your other JUnit tests so
+that you can run the test suites independently and at different
+frequencies.  Long-running performance tests will slow you down and
+undoubtedly tempt you to abandon unit testing altogether, so try to
+schedule them to run at times when they won't interfere with your
+refactoring pace.
+</p>
+<p>
+JUnitPerf tests are intended to be used specifically in situations
+where you have quantitative performance and/or scalability
+requirements that you'd like to keep in check while refactoring code.
+For example, you might write a JUnitPerf test to ensure that
+refactoring an algorithm didn't incur undesirable performance overhead
+in a performance-critical code section.  You might also write a
+JUnitPerf test to ensure that refactoring a resource pool didn't
+adversely affect the scalability of the pool under load.
+</p>
+<p>
+It's important to maintain a pragmatic approach when writing JUnitPerf
+tests to maximize the return on your testing investment.  Traditional
+performance profiling tools and techniques should be employed first to
+identify which areas of code exhibit the highest potential for
+performance and scalability problems.  JUnitPerf tests can then be
+written to automatically test and check that requirements are being
+met now and in the future.
+</p>
+<p>
+Here's an example usage scenario:  
+</p>
+<p>
+You've built a well-factored chunk of software, complete with the
+necessary suite of JUnit tests to validate the software.  At this
+point in the process you've gained as much knowledge about the design
+as possible.
+</p>
+<p>
+You then use a performance profiling tool to isolate where the
+software is spending most of its time.  Based on your knowledge of the
+design you're better equipped to make realistic estimates of the
+desired performance and scalability.  And, since your refactorings
+have formed clear and succinct methods, your profiler is able to point
+you towards smaller sections of code to tune.
+</p>
+<p>
+You then write a JUnitPerf test with the desired performance and
+scalability tolerances for the code to be tuned.  Without making any
+changes to the code, the JUnitPerf test should fail, proving that the
+test is written properly.  You then make the tuning changes in small
+steps.
+</p>
+<p>
+After each step you compile and rerun the JUnitPerf test.  If you've
+improved performance to the expected degree, the test passes.  If you
+haven't improved performance to the expected degree, the test fails
+and you continue the tuning process until the test passes.  In the
+future, when the code is again refactored, you re-run the test.  If
+the test fails, the previously defined performance limits have been
+exceeded, so you back out the change and continue refactoring until
+the test passes.
+</p>
+
+<!--
+
+    Download	
+
+-->
+<div class="header">
+<a name="download"></a> 
+Downloading JUnitPerf
+</div>
+<p>
+<a href="http://www.clarkware.com/software/junitperf-1.9.1.zip">JUnitPerf
+1.9</a> is the latest major version release. It includes all the minor
+version changes.
+</p>
+<p>
+This version requires Java 2 and
+<a href="http://sourceforge.net/project/showfiles.php?group_id=15278"
+target="_parent">JUnit 3.5</a> (or higher).
+</p>
+<p>
+The distribution contains a JAR file, source code, sample tests, API
+documentation, and this document.
+</p>
+
+
+<!--
+
+    Installation	
+
+-->
+<div class="header">
+<a name="download"></a> 
+Installing JUnitPerf
+</div>
+<p>
+<b>Windows</b>
+</p>
+<p>
+To install JUnitPerf, follow these steps:
+</p>
+<ol>
+  <li>
+    <p>
+      Unzip the <code>junitperf-&lt;version&gt;.zip</code> distribution
+      file to a directory referred to as <code>%JUNITPERF_HOME%</code>.
+    </p>
+  </li>
+  <li>
+    <p>
+      Add JUnitPerf to the classpath:
+    </p>
+    <p>
+      <code>set CLASSPATH=%CLASSPATH%;%JUNITPERF_HOME%\lib\junitperf-&lt;version&gt;.jar</code>
+    </p>
+  </li>
+</ol>
+<p>
+<b>Unix (bash)</b>
+</p>
+<p>
+To install JUnitPerf, follow these steps:
+</p>
+<ol>
+  <li>
+    <p>
+      Unzip the <code>junitperf-&lt;version&gt;.zip</code> distribution
+      file to a directory referred to as <code>$JUNITPERF_HOME</code>.
+    </p>
+  </li>
+  <li>
+    <p>
+      Change file permissions:
+    </p>
+    <p>
+      <code>chmod -R a+x $JUNITPERF_HOME</code>
+    </p>
+  </li>
+  <li>Add JUnitPerf to the classpath:
+    <p>
+      <code>export CLASSPATH=$CLASSPATH:$JUNITPERF_HOME/lib/junitperf-&lt;version&gt;.jar</code>
+    </p>
+  </li>
+</ol>
+
+<!--
+
+    Building	
+
+-->
+<div class="header">
+<a name="building"></a> 
+Building and Testing JUnitPerf
+</div>
+<p>
+The JUnitPerf distribution includes the pre-built classes in the
+<code>$JUNITPERF_HOME/lib/junitperf-&lt;version&gt;.jar</code> file.
+</p>
+<p>
+<b>Building</b>
+</p>
+<p>
+An <a href="http://jakarta.apache.org/ant" target="_parent">Ant</a>
+build file is included in <code>$JUNITPERF_HOME/build.xml</code> to
+build the <code>$JUNITPERF_HOME/dist/junitperf-&lt;version&gt;.jar</code>
+file from the included source code.
+</p>
+<p>
+To build JUnitPerf, use:
+</p>
+<div>
+<blockquote>
+<pre>
+cd $JUNITPERF_HOME
+ant jar
+</pre>
+</blockquote>
+</div>
+<p>
+<b>Testing</b>
+</p>
+<p>
+The JUnitPerf distribution includes
+<a href="http://www.junit.org" target="_parent">JUnit</a>
+test cases to validate the integrity of JUnitPerf.  
+</p>
+<p>
+To test JUnitPerf, use:
+</p>
+<div>
+<blockquote>
+<pre>
+cd $JUNITPERF_HOME
+ant test
+</pre>
+</blockquote>
+</div>
+
+<!--
+
+    How To Use	
+
+-->
+<div class="header">
+<a name="howtouse"></a> 
+Using JUnitPerf
+</div>
+<p>
+The easiest way to describe how to use JUnitPerf is to show examples
+of each type of test decorator.
+</p>
+<p>
+The <code>$JUNITPERF_HOME/samples</code> directory contains the set of
+example JUnitPerf tests described in this section.
+</p>
+<p>
+<b>TimedTest</b>
+</p>
+<p>
+A <code>TimedTest</code> test decorator is constructed with an
+existing JUnit test and a maximum elapsed time in milliseconds.
+</p>
+<p>
+For example, to create a timed test that waits for the completion of
+the <code>ExampleTestCase.testOneSecondResponse()</code> method and
+then fails if the elapsed time exceeded 1 second, use:
+</p>
+<blockquote><pre>
+long maxElapsedTime = 1000;
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test timedTest = new TimedTest(testCase, maxElapsedTime);
+</pre></blockquote>
+<p>
+Alternatively, to create a timed test that fails immediately when the
+elapsed time of
+the <code>ExampleTestCase.testOneSecondResponse()</code> test method
+exceeds 1 second, use:
+</p>
+<blockquote><pre>
+long maxElapsedTime = 1000;
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test timedTest = new TimedTest(testCase, maxElapsedTime, false);
+</pre></blockquote>
+<p>
+The following is an example test that creates a <code>TimedTest</code>
+to test the performance of the functionality being unit tested in the
+<code>ExampleTestCase.testOneSecondResponse()</code> method.  The timed 
+test waits for the method under test to complete, and then fails if the 
+elapsed time exceeded 1 second.
+</p>
+<div class="code-header">
+Example Timed Test
+</div>
+<div class="code">
+<pre>
+import com.clarkware.junitperf.*;
+import junit.framework.Test;
+
+public class ExampleTimedTest {
+
+    public static Test suite() {
+        
+        long maxElapsedTime = 1000;
+        
+        Test testCase = new ExampleTestCase("testOneSecondResponse");
+        Test timedTest = new TimedTest(testCase, maxElapsedTime);
+        
+        return timedTest;
+    }
+    
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
+}
+</pre>
+</div>
+<p>
+The granularity of the test decoration design offered by JUnit, and
+used by JUnitPerf, imposes some limitations.  The elapsed time
+measured by a <code>TimedTest</code> decorating a
+single <code>testXXX()</code> method of a <code>TestCase</code>
+includes the total time of the
+<code>setUp()</code>, <code>testXXX()</code>, and <code>tearDown()</code> 
+methods.  The elapsed time measured by a <code>TimedTest</code> decorating
+a <code>TestSuite</code> includes the total time of all <code>setUp()</code>, 
+<code>testXXX()</code>, and <code>tearDown()</code> methods for all the 
+<code>Test</code> instances in the <code>TestSuite</code>.
+Therefore, the expected elapsed time measurements should be adjusted 
+accordingly to account for the set-up and tear-down costs of the 
+decorated test.
+</p>
+<p>
+<b>LoadTest</b>
+</p>
+<p>
+A <code>LoadTest</code> is a test decorator that runs a test with a
+simulated number of concurrent users and iterations.
+</p>
+<p>
+In its simplest form, a <code>LoadTest</code> is constructed with a
+test to decorate and the number of concurrent users.  By default, each
+user runs one iteration of the test.
+</p>
+<p>
+For example, to create a load test of 10 concurrent users with each
+user running the <code>ExampleTestCase.testOneSecondResponse()</code>
+method once and all users starting simultaneously, use:
+</p>
+<blockquote><pre>
+int users = 10;
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test loadTest = new LoadTest(testCase, users);
+</pre></blockquote>
+<p>
+The load can be ramped by specifying a pluggable <code>Timer</code>
+instance that prescribes the delay between the addition of each
+concurrent user.  A <code>ConstantTimer</code> has a constant delay,
+with a zero value indicating that all users will be started
+simultaneously. A <code>RandomTimer</code> has a random delay with a
+uniformly distributed variation.
+</p>
+<p>
+For example, to create a load test of 10 concurrent users with each
+user running the <code>ExampleTestCase.testOneSecondResponse()</code>
+method once and with a 1 second delay between the addition of users,
+use:
+</p>
+<blockquote><pre>
+int users = 10;
+Timer timer = new ConstantTimer(1000);
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test loadTest = new LoadTest(testCase, users, timer);
+</pre></blockquote>
+<p>
+In order to simulate each concurrent user running a test for a 
+specified number of iterations, a <code>LoadTest</code> can be 
+constructed to decorate a <code>RepeatedTest</code>.  Alternatively, 
+a <code>LoadTest</code> convenience constructor specifying the number 
+of iterations is provided which creates a <code>RepeatedTest</code>. 
+</p>
+<p>
+For example, to create a load test of 10 concurrent users with each
+user running the <code>ExampleTestCase.testOneSecondResponse()</code>
+method for 20 iterations, and with a 1 second delay between the
+addition of users, use:
+</p>
+<blockquote><pre>
+int users = 10;
+int iterations = 20;
+Timer timer = new ConstantTimer(1000);
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test repeatedTest = new RepeatedTest(testCase, iterations);
+Test loadTest = new LoadTest(repeatedTest, users, timer);
+</pre></blockquote>
+<p>
+or, alternatively, use: 
+</p>
+<blockquote><pre>
+int users = 10;
+int iterations = 20;
+Timer timer = new ConstantTimer(1000);
+Test testCase = new ExampleTestCase("testOneSecondResponse");
+Test loadTest = new LoadTest(testCase, users, iterations, timer);
+</pre></blockquote> 
+<p>
+If a test case intended to be decorated as a <code>LoadTest</code>
+contains test-specific state in the <code>setUp()</code> method, then
+the
+<code>TestFactory</code> should be used to ensure that each concurrent user
+thread uses a thread-local instance of the test.  For example, to create a load 
+test of 10 concurrent users with each user running a thread-local instance of 
+<code>ExampleStatefulTest</code>, use:
+</p>
+<blockquote><pre>
+int users = 10;
+Test factory = new TestFactory(ExampleStatefulTest.class);
+Test loadTest = new LoadTest(factory, users);
+</pre></blockquote>
+<p>
+or, to load test a single test method, use: 
+</p>
+<blockquote><pre>
+int users = 10;
+Test factory = new TestMethodFactory(ExampleStatefulTest.class, "testSomething");
+Test loadTest = new LoadTest(factory, users);
+</pre></blockquote>
+<p>
+The following is an example test that creates a <code>LoadTest</code>
+to test the scalability of the functionality being unit tested in the
+<code>ExampleTestCase.testOneSecondResponse()</code> test method. 
+The <code>LoadTest</code> adds 10 concurrent users without delay, 
+with each user running the test method once.  The <code>LoadTest</code> 
+itself is decorated with a <code>TimedTest</code> to test the throughput
+of the <code>ExampleTestCase.testOneSecondResponse()</code> test method
+under load.  The test will fail if the total elapsed time 
+of the entire load test exceeds 1.5 seconds.
+</p>
+<div class="code-header">
+Example Throughput Under Load Test
+</div>
+<div class="code">
+<pre>
+import com.clarkware.junitperf.*;
+import junit.framework.Test;
+
+public class ExampleThroughputUnderLoadTest {
+
+    public static Test suite() {
+     
+        int maxUsers = 10;
+        long maxElapsedTime = 1500;
+        
+        Test testCase = new ExampleTestCase("testOneSecondResponse");
+        Test loadTest = new LoadTest(testCase, maxUsers);
+        Test timedTest = new TimedTest(loadTest, maxElapsedTime);
+
+        return timedTest;
+    }
+    
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
+}
+</pre>
+</div>
+<p>
+In the following example, the order of test decoration is reversed.
+The
+<code>TimedTest</code> measures the elapsed time of the 
+<code>ExampleTestCase.testOneSecondResponse()</code> method.  
+The <code>LoadTest</code> then decorates the <code>TimedTest</code> 
+to simulate a 10-user load on the <code>ExampleTestCase.testOneSecondResponse()</code> 
+method.  The test will fail if any user's response time exceeds 1 second.
+</p>
+<div class="code-header">
+Example Response Time Under Load Test
+</div>
+<div class="code">
+<pre>
+import com.clarkware.junitperf.*;
+import junit.framework.Test;
+
+public class ExampleResponseTimeUnderLoadTest {
+
+    public static Test suite() {
+     
+        int maxUsers = 10;
+        long maxElapsedTime = 1000;
+        
+        Test testCase = new ExampleTestCase("testOneSecondResponse");
+        Test timedTest = new TimedTest(testCase, maxElapsedTime);
+        Test loadTest = new LoadTest(timedTest, maxUsers);
+
+        return loadTest;
+    }
+    
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
+}
+</pre>
+</div>
+<p>
+<b>Performance Test Suite</b>
+</p>
+<p>
+The following is an example <code>TestCase</code> that combines the
+<code>ExampleTimedTest</code> and <code>ExampleLoadTest</code> into
+a single test suite that can be run automatically to run all performance-related tests:
+</p>
+<div class="code-header">
+Example Performance Test Suite
+</div>
+<div class="code">
+<pre>
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+public class ExamplePerfTestSuite {
+
+    public static Test suite() {
+
+        TestSuite suite = new TestSuite();
+        suite.addTest(ExampleTimedTest.suite());
+        suite.addTest(ExampleLoadTest.suite());
+        
+        return suite;
+    }
+    
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
+}
+</pre>
+</div>
+
+<!--
+
+    Writing Effective Tests	
+
+-->
+<div class="header">
+<a name="effectivetests"></a> 
+Writing Effective JUnitPerf Tests
+</div>
+<p>
+<b>Timed Tests</b>
+</p>
+<p>
+<i>Waiting Timed Tests</i>
+</p>
+<p>
+By default, a <code>TimedTest</code> will wait for the completion of
+its decorated test and then fail if the maximum elapsed time was
+exceeded.  This type of <i>waiting</i> timed test always allows its
+decorated test to accumulate all test results until test completion
+and check the accumulated test results.
+</p>
+<p>
+If the test decorated by a waiting timed test spawns threads, either
+directly or indirectly, then the decorated test must wait for those
+threads to run to completion and return control to the timed test.
+Otherwise, the timed test will wait indefinitely.  As a general rule,
+unit tests should always wait for spawned threads to run to
+completion, using <code>Thread.join()</code> for example, in order to
+accurately assert test results.
+</p>
+<p>
+<i>Non-Waiting Timed Tests</i>
+</p>
+<p> 
+Alternatively, a <code>TimedTest</code> can be constructed to
+immediately signal a failure when the maximum elapsed time of its
+decorated test is exceeded.  This type of <i>non-waiting</i> timed
+test will not wait for its decorated test to run to completion if the
+maximum elapsed time is exceeded.  Non-waiting timed tests are more
+efficient than waiting timed tests in that non-waiting timed tests
+don't waste time waiting for the decorated test to complete only then
+to signal a failure, if necessary.  However, unlike waiting timed
+tests, test results from a decorated test will not be accumulated
+after the expiration of the maximum elapsed time in a non-waiting
+timed test.
+</p>
+<p>
+<b>Load Tests</b>
+</p>
+<p>
+<i>Non-Atomic Load Tests</i>
+</p>
+<p>
+By default, a <code>LoadTest</code> does not enforce test atomicity
+(as defined in transaction processing) if its decorated test spawns
+threads, either directly or indirectly.  This type
+of <i>non-atomic</i> load test assumes that its decorated test is
+transactionally complete when control is returned.  For example, if
+the decorated test spawns threads and then returns control without
+waiting for its spawned threads to complete, then the decorated test
+is assumed to be transactionally complete.
+</p>
+<p>
+As a general rule, unit tests should always wait for spawned threads
+to run to completion, using <code>Thread.join()</code> for example, in
+order to accurately assert test results.  However, in certain
+environments this isn't always possible.  For example, as a result of
+a distributed lookup of an Enterprise JavaBean (EJB), an application
+server may spawn a new thread to handle the request.  If the new
+thread belongs to the same
+<code>ThreadGroup</code> as the thread running the decorated test (the
+default), then a non-atomic load test will simply wait for the
+completion of all threads spawned directly by the load test and the
+new (rogue) thread is ignored.
+</p>
+<p> 
+To summarize, non-atomic load tests only wait for the completion
+of threads spawned directly by the load test to simulate more than one
+concurrent user.
+</p>
+<p>
+<i>Atomic Load Tests</i>
+</p>
+<p>
+If threads are integral to the successful completion of a decorated
+test, meaning that the decorated test should not be treated as
+complete until all of its threads run to completion,
+then <code>setEnforceTestAtomicity(true)</code> should be invoked to
+enforce test atomicity (as defined in transaction processing).  This
+effectively causes the <i>atomic</i> load test to wait for the
+completion of all threads belonging to the
+same <code>ThreadGroup</code> as the thread running the decorated
+test.  Atomic load tests also treat any premature thread exit as a
+test failure.  If a thread dies abruptly, then all other threads
+belonging to the same <code>ThreadGroup</code> as the thread running
+the decorated test will be interrupted immediately.
+</p>
+<p>
+If a decorated test spawns threads belonging to the
+same <code>ThreadGroup</code> as the thread running the decorated test
+(the default), then the atomic load test will wait indefinitely for
+the spawned thread to complete.
+</p>
+<p>
+To summarize, atomic load tests wait for the completion of all threads
+belonging to the same <code>ThreadGroup</code> as the threads spawned
+directly by the load test to simulate more than one concurrent user.
+</p>
+
+<!--
+    
+    Limitations	
+
+-->
+<div class="header">
+<a name="limitations"></a> 
+Limitations
+</div>
+<p>
+JUnitPerf has the following known limitations:
+</p>
+<ul>
+  <li>
+    <p>
+      The elapsed time measured by a <code>TimedTest</code> decorating
+      a single <code>testXXX()</code> method of
+      a <code>TestCase</code> includes the total time of
+      the <code>setUp()</code>, <code>testXXX()</code>,
+      and <code>tearDown()</code> methods, as this is the granularity
+      offered by decorating any <code>Test</code> instance.  The
+      expected elapsed time measurements should be adjusted
+      accordingly to account for the set-up and tear-down costs of the
+      decorated test.
+    </p>
+  </li>
+  <li>
+    <p>
+      JUnitPerf is not intended to be a full-fledged load testing or
+      performance profiling tool, nor is it intended to replace the
+      use of these tools.  JUnitPerf should be used to write localized
+      performance unit tests to help developers refactor responsibly.
+    </p>
+  </li>
+  <li>
+    <p>
+      The performance of your tests can degrade significantly if too
+      many concurrent users are cooperating in a load test.  The
+      actual threshold number is JVM specific.
+    </p>
+  </li>
+</ul>
+
+<!--
+
+    Support	
+
+-->
+<div class="header">
+<a name="support"></a> 
+Support
+</div>
+<p>
+If you have any questions, comments, enhancement requests, success
+stories, or bug reports regarding JUnitPerf, or if you want to be
+notified when new versions of JUnitPerf are available, please email
+<a href="mailto:mike@clarkware.com">mike@clarkware.com</a>.
+Your information will be kept private.
+</p>
+<p>
+A <a href="http://groups.yahoo.com/group/junitperf/"
+target="_parent">mailing list</a> is also available to discuss JUnitPerf
+or to be notified when new versions of JUnitPerf are available.
+</p>
+
+<!--
+
+    Donate
+
+-->
+<div class="header">
+Donate
+<a name="donate"></a> 
+</div>
+<p>
+Please support the ongoing development of JUnitPerf by purchasing a copy
+of the book <a
+href="http://www.pragmaticprogrammer.com/sk/auto/">Pragmatic Project
+Automation</a>.
+</p>
+<p>
+Thanks in advance!
+</p>
+
+<!--
+
+    Training
+
+-->
+<div class="header">
+<a name="training"></a> 
+Training and Mentoring
+</div>
+<p>
+Reduce defects and improve design and code quality with a two-day,
+on-site <a
+href="http://clarkware.com/courses/TDDWithJUnit.html">Test-Driven
+Development with JUnit Workshop</a> that quickly spreads the testing
+bug throughout your team.
+</p>
+<p>
+I also offer JUnit <a
+href="http://clarkware.com/mentoring.html">mentoring</a> to help your
+keep the testing momentum.
+</p>
+<p>
+<a href="mailto:mike@clarkware.com">Contact me</a> for more details.
+</p>
+
+<!--
+
+    License
+
+-->
+<div class="header">
+<a name="license"></a> 
+License
+</div>
+<p>
+JUnitPerf is licensed under the
+<a href="http://www.clarkware.com/software/license.txt">BSD License</a>.
+</p>
+
+<!--
+
+    Credits
+
+-->
+<div class="header">
+<a name="credits"></a> 
+Acknowledgments
+</div>
+<p>
+Many thanks to Ervin Varga for improving thread safety and test
+atomicity by suggesting the use of a ThreadGroup to catch and handle
+thread exceptions.  Ervin also proposed the idea and provided the
+implementation for the
+<code>TimedTest</code> signaling a failure immediately if the maximum time 
+is exceeded and the <code>TestFactory</code>.  His review of JUnitPerf and 
+his invaluable contributions are much appreciated! 
+</p>
+
+<!--
+
+    Resources
+
+-->
+<div class="header">
+<a name="resources"></a> 
+Resources
+</div>
+<ul>
+  <li>
+    <p><a href="http://www.clarkware.com/articles/JUnitPrimer.html" 
+	 target="_parent">JUnit Primer</a><br/>
+      <i>Mike Clark, Clarkware Consulting, Inc.</i>
+    </p>
+    <p>
+      This article demonstrates how to write and run simple test cases 
+      and test suites using the JUnit testing framework.
+    </p>
+  </li>
+  <li>
+    <p>
+      <a href="http://www.javapronews.com/javapronews-47-20030721ContinuousPerformanceTestingwithJUnitPerf.html" 
+	 target="_parent">Continuous Performance Testing With
+	 JUnitPerf</a><br/>
+      <i>Mike Clark (JavaProNews, 2003)</i>
+    </p>
+    <p>
+      This article demonstrates how to write
+      <a href="http://clarkware.com/software/JUnitPerf.html">JUnitPerf</a> 
+      tests that continually keep performance
+      and scalability requirements in check.  
+    </p>
+  </li>
+  <li>
+    <p>
+      <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0131016490/002-5032831-9792065" target="_parent">Test-Driven Development: A Practical Guide</a>
+	  <br/><i>David Astels (Prentice Hall, 2003)</i>
+    </p>
+    <p>
+      Includes a section written by yours truly on how to 
+      use JUnitPerf for continuous performance testing.
+    </p>
+  </li>
+  <li>
+    <p>
+      <a
+      href="http://www.amazon.com/exec/obidos/tg/detail/-/0596003870/002-5032831-9792065"
+      target="_parent">Java Extreme Programming Cookbook</a><br/>
+      <i>Eric Burke, Brian Coyner (O'Reilly &amp; Associates, 2003)</i>
+    </p>
+    <p>
+      Includes a chapter of JUnitPerf recipes.
+    </p>
+  </li>
+  <li>
+    <p>
+      <a href="http://www.amazon.com/exec/obidos/tg/detail/-/047120708X/002-5032831-9792065" target="_parent">Java Tools for Extreme Programming: Mastering Open Source Tools Including Ant, JUnit, and Cactus</a><br/>
+      <i>Richard Hightower, Nicholas Lesiecki (John Wiley &amp; Sons, 2001)</i>
+    </p>
+    <p>
+      Includes a chapter describing how to use JUnitPerf with HttpUnit.
+    </p>
+  </li>
+</ul>
+
+
+<div id="copyright">
+Copyright &copy; 1999-2005 Clarkware Consulting, Inc.
+<br/>
+All Rights Reserved
+</div>
+
+</body>
+</html>

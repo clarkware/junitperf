@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+
+<project name="junitperf" default="test">
+
+  <description>
+    Builds and tests JUnitPerf.
+  </description>
+
+  <property file="build.properties"/>
+  <property environment="env"/>
+
+  <property name="Name" value="${ant.project.name}"/>
+  <property name="version" value="1.9.1"/>
+
+  <property name="src.dir" location="src"/>
+  <property name="test.dir" location="test"/>
+  <property name="build.dir" location="build"/>
+  <property name="docs.dir" location="docs"/>
+  <property name="dist.dir" location="dist"/>
+  <property name="run.dir" location="${build.dir}"/>
+
+  <property name="javadoc.dir" location="${build.dir}/docs/api"/>
+  <property name="dist.name" value="${Name}-${version}"/>
+  <property name="package.dir" location="${dist.dir}/${dist.name}"/>
+  <property name="test.reports.dir" location="${build.dir}/reports" />
+
+  <property name="build.debug" value="true"/>
+
+  <path id="project.classpath">
+    <pathelement location="${build.dir}"/>
+  </path>
+
+  <target name="prepare">
+    <tstamp />
+    <mkdir dir="${build.dir}"/>
+    <available property="junit.available"
+               classname="junit.framework.TestCase"/>
+    <fail message="Missing junit.jar in system CLASSPATH"
+          unless="junit.available"/>
+  </target>
+
+  <target name="compile" depends="prepare"
+    description="Compiles the source code">
+    <javac srcdir="${src.dir}"
+           destdir="${build.dir}"
+           debug="${build.debug}">
+      <classpath refid="project.classpath"/>
+    </javac>
+  </target>
+
+  <target name="compile-samples" depends="compile"
+    description="Compiles the samples tests">
+    <javac srcdir="samples"
+           destdir="${build.dir}"
+           debug="${build.debug}">
+      <classpath refid="project.classpath"/>
+    </javac>
+  </target>
+
+  <target name="compile-tests" depends="compile"
+          if="junit.available"
+    description="Compiles the test code">
+    <javac srcdir="${test.dir}"
+           destdir="${build.dir}"
+           debug="${build.debug}">
+      <classpath refid="project.classpath"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="compile-tests, test-samples"
+          if="junit.available"
+          description="Runs all the tests">
+    <junit haltonfailure="yes" fork="yes">
+      <test name="com.clarkware.junitperf.AllTests"/>
+      <formatter type="plain" usefile="false"/>
+      <classpath refid="project.classpath"/>
+    </junit>
+  </target>
+
+  <target name="test-samples" depends="compile-samples"
+          if="junit.available"
+          description="Runs all the sample tests">
+    <junit haltonfailure="yes" fork="yes">
+      <test name="com.clarkware.junitperf.ExamplePerfTestSuite"/>
+      <formatter type="plain" usefile="false"/>
+      <classpath refid="project.classpath"/>
+    </junit>
+  </target>
+
+  <target name="test-sample-reports" depends="compile-samples"
+          description="Runs all the sample tests and generates an HTML report">
+
+    <mkdir dir="${test.reports.dir}" />
+
+    <junit haltonfailure="no"
+           printsummary="no"
+           fork="no"
+           errorProperty="test.failed"
+           failureProperty="test.failed">
+      <formatter type="plain" usefile="false" />
+      <formatter type="xml" />
+      <classpath refid="project.classpath" />
+      <batchtest todir="${test.reports.dir}">
+        <fileset dir="${build.dir}">
+          <include name="**/Example*Test.class" />
+        </fileset>
+      </batchtest>
+    </junit>
+
+    <junitreport todir="${test.reports.dir}">
+      <fileset dir="${test.reports.dir}">
+        <include name="TEST-*.xml" />
+      </fileset>
+      <report format="frames" todir="${test.reports.dir}" />
+    </junitreport>
+
+    <fail if="test.failed">
+      Tests failed! Check test reports at ${test.reports.dir}.
+    </fail>
+
+  </target>
+
+  <target name="javadoc" depends="compile"
+          description="Generates JavaDoc">
+    
+    <mkdir dir="${javadoc.dir}"/>
+    
+    <javadoc packagenames="*"
+             sourcepath="${src.dir}"
+             destdir="${javadoc.dir}"
+             author="true"
+             version="true"
+             windowtitle="JUnitPerf ${version} API"
+             doctitle="JUnitPerf ${version} API"
+             bottom="Copyright &#169; 1999-2005 Clarkware Consulting, Inc.">
+      <classpath refid="project.classpath"/>
+    </javadoc>
+  </target>
+
+  <target name="jar" depends="compile"
+          description="Creates a JAR file">
+    
+    <mkdir dir="${dist.dir}"/>
+    
+    <jar destfile="${dist.dir}/${dist.name}.jar"
+         basedir="${build.dir}" />
+
+  </target>
+
+  <target name="package"
+          depends="clean, test, jar, javadoc"
+          description="Creates a distribution file">
+
+    <copy todir="${package.dir}">
+      <fileset dir="${basedir}">
+        <include name="build.xml"/>
+        <include name="README"/>
+        <include name="CHANGES"/>
+        <include name="LICENSE"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${package.dir}/docs">
+      <fileset dir="${docs.dir}"/>
+    </copy>
+    
+    <copy todir="${package.dir}/src">
+      <fileset dir="${src.dir}"/>
+    </copy>
+    
+    <copy todir="${package.dir}/test">
+      <fileset dir="${test.dir}"/>
+    </copy>  
+    
+    <copy todir="${package.dir}/samples">
+      <fileset dir="samples"/>
+    </copy>
+    
+    <copy todir="${package.dir}/lib"
+          file="${dist.dir}/${dist.name}.jar"/>
+
+    <tar tarfile="${dist.dir}/${dist.name}.tar.gz"
+         basedir="${dist.dir}/"
+         compression="gzip"
+         includes="${dist.name}/**" />
+
+    <zip destfile="${dist.dir}/${dist.name}.zip"
+         basedir="${dist.dir}/"
+         includes="${dist.name}/**" />
+    
+  </target> 
+
+  <target name="clean" 
+          description="Deletes all build artifacts">
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir}"/>
+  </target>
+
+</project>
